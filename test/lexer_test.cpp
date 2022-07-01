@@ -3,7 +3,6 @@
 
 
 int main() {
-    int i = 0;
     std::string input = "let x = 11\n\n"
                         "let y: i32 = 1.29\n"
                         "if x == y && x + y < 200 || 1 == 1 {\n"
@@ -67,6 +66,7 @@ int main() {
         {Token::NEWLINE, ""},
         {Token::ENDMARKER, ""},
     };
+    int i = 0;
     for (const auto& test: tests) {
         auto lex_tok = lex.nextToken();
         if (lex_tok.first != test.tok) {

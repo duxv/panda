@@ -53,6 +53,7 @@ Token lookup_keyword(const std::string& ident) {
     if (ident == "while")       return Token::WHILE;
     if (ident == "break")       return Token::BREAK;
     if (ident == "continue")    return Token::CONTINUE;
+    if (ident == "in")          return Token::IN;
 
     return Token::IDENT;
 }
@@ -141,10 +142,10 @@ std::string& Lexer::read_ident() {
 }
 
 std::pair<Token, std::string>& Lexer::read_number() {
+    int offs = offset;
     auto ret = new std::pair<Token, std::string>;
     ret->first = Token::INT; // Assuming it is an int
     int base = 10; // assumed base is 10
-
     if (ch == '0') {
         char nch = tolower(peek());
         if (nch == 'b') {
@@ -185,7 +186,7 @@ std::pair<Token, std::string>& Lexer::read_number() {
             error_handler(offset, "exponent has no digits");
         }
     }
-    
+    ret->second = input.substr(offs, offset-offs);
     return *ret;
 }
 
@@ -198,8 +199,9 @@ std::pair<Token, std::string>& Lexer::nextToken() {
         ret->second = read_ident(); 
         ret->first = lookup_keyword(ret->second);
     } else if (isdigit(ch)) {
+        delete ret;
         ret = &read_number();
-    } else {
+    } else { 
         goto read_operators;
     }
     
@@ -211,8 +213,15 @@ read_operators:
     read();
 
     switch (_ch) {
+        case 0:
+            ret->first = Token::ENDMARKER;
+            break;
         case '\n':
+            while(ch == '\n') read(); // skip all the newlines
             ret->first = Token::NEWLINE;
+            break;
+        case ',':
+            ret->first = Token::COMMA;
             break;
         case '+': 
             ret->first = Token::ADD;
@@ -274,6 +283,25 @@ read_operators:
         case '.':
             ret->first = Token::DOT;
             break;
+        case '&':
+            if (ch != '&') {
+                std::cout << ch << std::endl;
+                ret->first = Token::UNKNOWN;
+                ret->second = _ch;
+            } else {
+                read();
+                ret->first = Token::AND;
+            }
+            break;
+        case '|':
+            if (ch != '|') {
+                ret->first = Token::UNKNOWN;
+                ret->second = _ch;
+            } else {
+                read();
+                ret->first = Token::OR;
+            }
+            break;
         case '!':
         {
             if (ch == '=') {
@@ -315,6 +343,9 @@ read_operators:
             ret->first = Token::STRING;
             ret->second = read_string();
         break;
+        default:
+            ret->first = Token::UNKNOWN;
+            ret->second.push_back(_ch);
     }
     return *ret;
 }

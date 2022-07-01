@@ -1,0 +1,390 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.3
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Fri Jul  1 19:58:36 2022
+
+# Variables
+
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+GJS_DEBUG_OUTPUT = stderr
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-5362bfd8-b701-4456-9224-1c32ec742642.sock
+# makefile (from 'Makefile', line 1)
+SRC_DIR := ./src
+# environment
+VSCODE_CWD = /home/david/Desktop/Programming/Cpp/panda
+# environment
+WINDOWID = 67108868
+# environment
+WINDOWPATH = 2
+# environment
+CAML_LD_LIBRARY_PATH = /home/david/.opam/4.14.0/lib/stublibs:/home/david/.opam/4.14.0/lib/ocaml/stublibs:/home/david/.opam/4.14.0/lib/ocaml
+# environment
+GDM_LANG = en_US.UTF-8
+# default
+MAKE_COMMAND := make
+# environment
+QT_ACCESSIBILITY = 1
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# makefile (from 'Makefile', line 4)
+OBJ_DIR := ./.obj
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/david/Desktop/Programming/Cpp/panda
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+XDG_DATA_DIRS = /usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+# environment
+OLDPWD = /home/david/Desktop/Programming/Cpp
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+VSCODE_LOG_STACK = false
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/david/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
+# environment
+LANG = C
+# environment
+XAUTHORITY = /run/user/1000/gdm/Xauthority
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# makefile
+MAKEFLAGS = pqrR
+# makefile
+CURDIR := /home/david/Desktop/Programming/Cpp/panda
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# default
+.SHELLFLAGS := -c
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+XDG_SESSION_DESKTOP = gnome
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# automatic
+@F = $(notdir $@)
+# environment
+OCAML_TOPLEVEL_PATH = /home/david/.opam/4.14.0/lib/toplevel
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_PID = 168390
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+SESSION_MANAGER = local/192-168-0-113.rdsnet.ro:@/tmp/.ICE-unix/2766,unix/192-168-0-113.rdsnet.ro:/tmp/.ICE-unix/2766
+# automatic
+*F = $(notdir $*)
+# environment
+MANPATH = :/home/david/.opam/4.14.0/man
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=ibus
+# environment
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# environment
+SHLVL = 1
+# makefile (from 'Makefile', line 3)
+SRC_DIRS := ./src
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /home/david/.opam/4.14.0/bin:/home/david/.cargo/bin:/home/david/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/usr/local/go/bin
+# default
+MAKEFILES := 
+# automatic
+^F = $(notdir $^)
+# makefile (from 'Makefile', line 7)
+OBJ_FILES := ./.obj/lexer.o ./.obj/token.o ./.obj/main.o
+# environment
+INVOCATION_ID = aa717e83bcb24584996cea2ab81d090b
+# environment
+VSCODE_LOG_NATIVE = false
+# environment
+USERNAME = david
+# automatic
+?F = $(notdir $?)
+# environment
+XDG_CURRENT_DESKTOP = GNOME
+# environment
+ALACRITTY_LOG = /tmp/Alacritty-112722.log
+# environment
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+# automatic
++F = $(notdir $+)
+# environment
+DESKTOP_SESSION = gnome
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = GNOME
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+LOGNAME = david
+# makefile (from 'Makefile', line 10)
+CPPFLAGS := -Wall -pedantic -std=c++2a
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/Alacritty.desktop
+# makefile
+.DEFAULT_GOAL := all
+# makefile (from 'Makefile', line 6)
+OBJ_DIRS := ./.obj   ./src
+# environment
+DISPLAY = :1
+# environment
+USER = david
+# environment
+GTK_MODULES = gail:atk-bridge
+# default
+MAKE_VERSION := 4.3
+# makefile (from 'Makefile', line 2)
+SRC_FILES := ./src/lexer.cpp ./src/token.cpp ./src/main.cpp
+# 'override' directive
+.SHELLSTATUS := 0
+# environment
+MANAGERPID = 2559
+# environment
+OPAM_SWITCH_PREFIX = /home/david/.opam/4.14.0
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 112722
+# environment
+SSH_AGENT_PID = 2732
+# environment
+_ = /usr/bin/code
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+COLORTERM = truecolor
+# environment
+JOURNAL_STREAM = 8:25663
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /home/david
+# environment
+QT_IM_MODULE = ibus
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-10a394bb-1.68.1-main.sock
+# environment
+TERM = xterm-256color
+# environment
+IM_CONFIG_PHASE = 1
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# default
+SUFFIXES := 
+# makefile (from 'Makefile', line 8)
+TARGET := main
+# environment
+VSCODE_CLI = 1
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+# makefile (from 'Makefile', line 9)
+CC := clang++
+# environment
+XDG_MENU_PREFIX = gnome-
+# environment
+GDMSESSION = gnome
+# variable set hash-table stats:
+# Load=115/1024=11%, Rehash=0, Collisions=5/176=3%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# src (device 2050, inode 802043): 2 files, no impossibilities so far.
+# . (device 2050, inode 660596): 12 files, no impossibilities.
+
+# 14 files, no impossibilities in 2 directories.
+
+# Implicit Rules
+
+.obj/%.o: src/%.cpp
+#  recipe to execute (from 'Makefile', line 18):
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+
+# 1 implicit rules, 0 (0.0%) terminal.
+# Files
+
+# Not a target:
+src/lexer.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-01 15:56:34.877264435
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-30 20:00:26.756567784
+#  File has been updated.
+#  Successfully updated.
+
+ 
+.obj/lexer.o: src/lexer.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'lexer'
+#  Last modified 2022-07-01 13:26:16.586556401
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := .obj/lexer.o
+# automatic
+# * := lexer
+# automatic
+# < := src/lexer.cpp
+# automatic
+# + := src/lexer.cpp
+# automatic
+# % := 
+# automatic
+# ^ := src/lexer.cpp
+# automatic
+# ? := src/lexer.cpp
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=2/16=12%
+#  recipe to execute (from 'Makefile', line 18):
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 26):
+	rm -rf $(OBJ_FILES) $(TARGET)
+
+# Not a target:
+.obj/main.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: .obj src main
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/6=0%
+
+src:
+#  Implicit rule search has not been done.
+#  Last modified 2022-07-01 19:47:44.782246579
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 21):
+	@mkdir -p $@
+
+# Not a target:
+.obj/token.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+main: .obj/lexer.o .obj/token.o .obj/main.o
+#  Implicit rule search has not been done.
+#  Last modified 2022-07-01 13:26:17.610596306
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/6=0%
+#  recipe to execute (from 'Makefile', line 15):
+	$(CC) $(LDFLAGS) -o $@ $^
+
+.obj:
+#  Implicit rule search has not been done.
+#  Last modified 2022-07-01 13:26:17.558594278
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 21):
+	@mkdir -p $@
+
+.PHONY: clean
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=13/1024=1%, Rehash=0, Collisions=0/38=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 28 / storage = 237 B / avg = 8 B
+# current buf: size = 8162 B / used = 237 B / count = 28 / avg = 8 B
+
+# strcache performance: lookups = 48 / hit rate = 41%
+# hash-table stats:
+# Load=28/8192=0%, Rehash=0, Collisions=0/48=0%
+# Finished Make data base on Fri Jul  1 19:58:36 2022
+
+ 

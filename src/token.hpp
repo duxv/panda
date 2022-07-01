@@ -33,6 +33,9 @@ enum class Token {
     LESSEQ, // <=
     GREATEREQ, // >=
 
+    AND, // &&
+    OR, // || 
+
     COMMA, // ,
     COLON, // :
     DOT, // .
@@ -48,6 +51,7 @@ enum class Token {
     _beg_keywords,
     LET,
     IF,
+    IN,
     ELSE,
     TRUE,
     FALSE,
