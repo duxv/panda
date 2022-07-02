@@ -3,3 +3,4 @@ panda
 *.o
 ./.obj
 *_test
+.vscode
