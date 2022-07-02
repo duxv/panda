@@ -1,7 +1,6 @@
 #include <iostream>
 #include "../src/lexer.hpp"
 
-
 int main() {
     std::string input = "let x = 11\n\n"
                         "let y: i32 = 1.29\n"
