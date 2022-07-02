@@ -1,6 +1,5 @@
-lexer
-parser
 main
 panda
 *.o
 ./.obj
+*_test
