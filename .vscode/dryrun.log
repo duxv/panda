@@ -1,0 +1,11 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/david/Desktop/Programming/Cpp/panda'
+mkdir -p .obj
+mkdir -p src
+clang++ -Wall -pedantic -std=c++2a  -c -o .obj/lexer.o src/lexer.cpp
+clang++ -Wall -pedantic -std=c++2a  -c -o .obj/token.o src/token.cpp
+clang++ -Wall -pedantic -std=c++2a  -c -o .obj/ast.o src/ast.cpp
+clang++ -Wall -pedantic -std=c++2a  -c -o .obj/main.o src/main.cpp
+clang++  -o main .obj/lexer.o .obj/token.o .obj/ast.o .obj/main.o
+make: Leaving directory '/home/david/Desktop/Programming/Cpp/panda'
+ 

@@ -24,9 +24,9 @@ class Lexer {
     char peek();
     void skip_whitespace();
     void read_digits(int base);
-    std::string& read_string();
-    std::string& read_ident();
-    std::pair<Token, std::string>& read_number();
+    std::string read_string();
+    std::string read_ident();
+    std::pair<Token, std::string>* read_number();
     bool read_escape();
 
 public:
@@ -35,7 +35,7 @@ public:
         if (input.size() > 0)
             ch = input[0]; // initialize the first char
     }
-    std::pair<Token, std::string>& nextToken();
+    std::pair<Token, std::string>* nextToken();
 };
 
 #endif

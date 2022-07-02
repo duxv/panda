@@ -2,6 +2,7 @@
 #define TOKEN_HPP
 
 #include <ostream>
+#include <map>
 
 enum class Token {
     ENDMARKER,
@@ -63,6 +64,7 @@ enum class Token {
     _end_keywords,
 };
 
+extern std::map<Token, std::string> token_string;
 std::ostream& operator<<(std::ostream& os, Token tok);
 
 #endif

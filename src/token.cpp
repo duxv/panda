@@ -3,7 +3,7 @@
 #include <map>
 
 
-static std::map<Token, std::string> token_string {
+std::map<Token, std::string> token_string {
     {Token::ENDMARKER, "ENDMARKER"},
     {Token::NEWLINE, "NEWLINE"},
     {Token::UNKNOWN, "UNKNOWN"},

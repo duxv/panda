@@ -16,6 +16,7 @@ namespace AST {
         std::size_t m_pos;
         node_t m_type;
     public:
+        virtual std::string string() = 0;
         std::size_t pos() { return m_pos; }
         node_t node_type() { return m_type; }
         explicit Node(std::size_t pos, node_t type) 
@@ -55,7 +56,8 @@ namespace AST {
     };
 
     struct Program : public Node {
-        std::vector<Stmt> stmts;
+        std::vector<Stmt&> stmts;
+
     };
 
     enum literal_t {
@@ -70,17 +72,19 @@ namespace AST {
         std::string value;
         explicit ExprLiteral(std::size_t pos, std::string value) 
         : Expr(pos, EXPR_LITERAL), value(value) {}
-
+        std::string string() { return value; }
         literal_t literal_type() { return type; }
-
-        std::ostream& operator<<(std::ostream& os) {
-            
-        }
     };
 
     struct ExprUnary : public Expr {
         Token op;
         Expr *right;
+        std::string string() {
+            std::string s = token_string[op];
+            s += ' ';
+            s += right->string();
+            return s;
+        }
         explicit ExprUnary(std::size_t pos, Token op, Expr *right)
         : Expr(pos, EXPR_UNARY), op(op), right(right) {}
     };
@@ -89,14 +93,27 @@ namespace AST {
         Expr *left;
         Token op;
         Expr *right;
+        std::string string() {
+            std::string s = left->string();
+            s += ' ';
+            s += token_string[op];
+            s += ' ';
+            s += right->string();
+        }
         explicit ExprBinary(std::size_t pos, Expr *left, Token op, Expr *right)
         : Expr(pos, EXPR_BINARY), left(left), op(op), right(right) {}
     };
 
-    struct StmtIf : public Stmt {
-        std::vector<Expr> cond; // all conditions
-        std::vector<Stmt> actions; // all if actions
-        std::vector<Stmt> alternative; // the else
+    // Statements
+
+    struct StmtExpr : public Stmt {
+        Expr& expr;
+        std::string string() {
+            std::string s = expr.string();
+            s += '\n';
+        }
+        explicit StmtExpr(std::size_t pos, Expr& expr)
+        : Stmt(pos, STMT_EXPR), expr(expr) {}
     };
 }
 

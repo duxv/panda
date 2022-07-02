@@ -114,7 +114,7 @@ bool Lexer::read_escape() {
     }
 }
 
-std::string& Lexer::read_string() {
+std::string Lexer::read_string() {
     std::size_t offs = offset; // already skipped the '"'
     for (;;) {
         char _ch = ch;
@@ -126,22 +126,20 @@ std::string& Lexer::read_string() {
         if (_ch == '"') break;
         if (_ch == '\\') read_escape();
     }
-    std::string *ret = new std::string(input.substr(offs, offset - offs - 1));
-    return *ret;
+    return std::string(input.substr(offs, offset - offs - 1));
     // -1 in order to not include the last '"'
 }
 
-std::string& Lexer::read_ident() {
+std::string Lexer::read_ident() {
     std::size_t offs = offset;
 
     while (is_identifier_part(ch)) {
         read();
     }
-    std::string *ret = new std::string(input.substr(offs, offset-offs));
-    return *ret;
+    return std::string(input.substr(offs, offset-offs));
 }
 
-std::pair<Token, std::string>& Lexer::read_number() {
+std::pair<Token, std::string>* Lexer::read_number() {
     int offs = offset;
     auto ret = new std::pair<Token, std::string>;
     ret->first = Token::INT; // Assuming it is an int
@@ -187,10 +185,10 @@ std::pair<Token, std::string>& Lexer::read_number() {
         }
     }
     ret->second = input.substr(offs, offset-offs);
-    return *ret;
+    return ret;
 }
 
-std::pair<Token, std::string>& Lexer::nextToken() {
+std::pair<Token, std::string>* Lexer::nextToken() {
     skip_whitespace();
     char _ch = ch;
     auto ret = new std::pair<Token, std::string>;
@@ -200,12 +198,12 @@ std::pair<Token, std::string>& Lexer::nextToken() {
         ret->first = lookup_keyword(ret->second);
     } else if (isdigit(ch)) {
         delete ret;
-        ret = &read_number();
+        ret = read_number();
     } else { 
         goto read_operators;
     }
     
-    return *ret;
+    return ret;
 
 
 read_operators:
@@ -347,5 +345,5 @@ read_operators:
             ret->first = Token::UNKNOWN;
             ret->second.push_back(_ch);
     }
-    return *ret;
+    return ret;
 }
