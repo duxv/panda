@@ -7,15 +7,17 @@ OBJ_DIRS += $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(SRC_DIRS))
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 TARGET := main
 CC := clang++
-CPPFLAGS := -Wall -pedantic -std=c++2a
+CPPFLAGS := -Wall -pedantic -std=c++20
 
 all: $(OBJ_DIRS) $(TARGET)
 
 $(TARGET): $(OBJ_FILES)
-	$(CC) $(LDFLAGS) -o $@ $^
+	@echo $@
+	@$(CC) $(LDFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+	@echo $^
+	@$(CC) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ_DIRS):
 	@mkdir -p $@

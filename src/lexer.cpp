@@ -139,10 +139,10 @@ std::string Lexer::read_ident() {
     return std::string(input.substr(offs, offset-offs));
 }
 
-std::pair<Token, std::string>* Lexer::read_number() {
+std::pair<Token, std::string> Lexer::read_number() {
     int offs = offset;
-    auto ret = new std::pair<Token, std::string>;
-    ret->first = Token::INT; // Assuming it is an int
+    std::pair<Token, std::string> ret;
+    ret.first = Token::INT; // Assuming it is an int
     int base = 10; // assumed base is 10
     if (ch == '0') {
         char nch = tolower(peek());
@@ -166,14 +166,14 @@ std::pair<Token, std::string>* Lexer::read_number() {
 
     // fractional part
     if (ch == '.' && (base == 10 || base == 16)) {
-        ret->first = Token::FLOAT;
+        ret.first = Token::FLOAT;
         read();
         read_digits(base);
     }
 
     // exponent
     if (ch == 'e' || ch == 'E' || ch == 'p' || ch == 'P') {
-        ret->first = Token::FLOAT;
+        ret.first = Token::FLOAT;
         read();
         if (ch == '-' || ch == '+') {
             read();
@@ -184,20 +184,19 @@ std::pair<Token, std::string>* Lexer::read_number() {
             error_handler(offset, "exponent has no digits");
         }
     }
-    ret->second = input.substr(offs, offset-offs);
+    ret.second = input.substr(offs, offset-offs);
     return ret;
 }
 
-std::pair<Token, std::string>* Lexer::nextToken() {
+std::pair<Token, std::string> Lexer::nextToken() {
     skip_whitespace();
     char _ch = ch;
-    auto ret = new std::pair<Token, std::string>;
+    std::pair<Token, std::string> ret;
 
     if (is_identifier_start(ch)) {
-        ret->second = read_ident(); 
-        ret->first = lookup_keyword(ret->second);
+        ret.second = read_ident(); 
+        ret.first = lookup_keyword(ret.second);
     } else if (isdigit(ch)) {
-        delete ret;
         ret = read_number();
     } else { 
         goto read_operators;
@@ -212,28 +211,27 @@ read_operators:
 
     switch (_ch) {
         case 0:
-            ret->first = Token::ENDMARKER;
+            ret.first = Token::ENDMARKER;
             break;
         case '\n':
             while(ch == '\n') read(); // skip all the newlines
-            ret->first = Token::NEWLINE;
+            ret.first = Token::NEWLINE;
             break;
         case ',':
-            ret->first = Token::COMMA;
+            ret.first = Token::COMMA;
             break;
         case '+': 
-            ret->first = Token::ADD;
+            ret.first = Token::ADD;
             break;
         case '-': 
-            ret->first = Token::SUB;
+            ret.first = Token::SUB;
             break;
         case '*': 
-            ret->first = Token::MUL;
+            ret.first = Token::MUL;
             break;
         case '/':
         {
             if (ch == '/' || ch == '*') {
-                delete ret; // will use recursion
                 if (ch == '/')
                     while(ch != '\n' && ch != 0)
                         read();
@@ -247,66 +245,66 @@ read_operators:
                     }
                 return nextToken();
             } else { // Token::DIV
-                ret->first = Token::DIV;
+                ret.first = Token::DIV;
                 break;
             }
         }
         case '%': 
-            ret->first = Token::REM;
+            ret.first = Token::REM;
             break;
         case ';':
-            ret->first = Token::NEWLINE; // We treat ';' as a newline.
+            ret.first = Token::NEWLINE; // We treat ';' as a newline.
             break;
         case ':':
-            ret->first = Token::COLON;
+            ret.first = Token::COLON;
             break;
         case '(':
-            ret->first = Token::LPAREN;
+            ret.first = Token::LPAREN;
             break;
         case ')':
-            ret->first = Token::RPAREN;
+            ret.first = Token::RPAREN;
             break;
         case '[':
-            ret->first = Token::LBRACKET;
+            ret.first = Token::LBRACKET;
             break;
         case ']':
-            ret->first = Token::RBRACKET;
+            ret.first = Token::RBRACKET;
             break;
         case '{':
-            ret->first = Token::LBRACE;
+            ret.first = Token::LBRACE;
             break;
         case '}':
-            ret->first = Token::RBRACE;
+            ret.first = Token::RBRACE;
             break;
         case '.':
-            ret->first = Token::DOT;
+            ret.first = Token::DOT;
             break;
         case '&':
             if (ch != '&') {
                 std::cout << ch << std::endl;
-                ret->first = Token::UNKNOWN;
-                ret->second = _ch;
+                ret.first = Token::UNKNOWN;
+                ret.second = _ch;
             } else {
                 read();
-                ret->first = Token::AND;
+                ret.first = Token::AND;
             }
             break;
         case '|':
             if (ch != '|') {
-                ret->first = Token::UNKNOWN;
-                ret->second = _ch;
+                ret.first = Token::UNKNOWN;
+                ret.second = _ch;
             } else {
                 read();
-                ret->first = Token::OR;
+                ret.first = Token::OR;
             }
             break;
         case '!':
         {
             if (ch == '=') {
                 read();
-                ret->first = Token::NOTEQ;
+                ret.first = Token::NOTEQ;
             } else
-                ret->first = Token::NOT;
+                ret.first = Token::NOT;
             
             break;
         }
@@ -314,36 +312,38 @@ read_operators:
         {
             if (ch == '=') {
                 read();
-                ret->first = Token::LESSEQ;
+                ret.first = Token::LESSEQ;
             } else
-                ret->first = Token::LESS;
+                ret.first = Token::LESS;
             break;
         }
         case '>':
         {
             if (ch == '=') {
                 read();
-                ret->first = Token::GREATEREQ;
+                ret.first = Token::GREATEREQ;
             } else
-                ret->first = Token::GREATER;
+                ret.first = Token::GREATER;
             break;
         }
         case '=':
         {
             if (ch == '=') {
                 read();
-                ret->first = Token::EQUAL;
+                ret.first = Token::EQUAL;
             } else
-                ret->first = Token::ASSIGN;
+                ret.first = Token::ASSIGN;
         }
         break;
         case '"':
-            ret->first = Token::STRING;
-            ret->second = read_string();
+            ret.first = Token::STRING;
+            ret.second = read_string();
         break;
         default:
-            ret->first = Token::UNKNOWN;
-            ret->second.push_back(_ch);
+            ret.first = Token::UNKNOWN;
+            ret.second.push_back(_ch);
     }
     return ret;
 }
+
+std::size_t Lexer::get_pos() { return offset; }

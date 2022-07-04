@@ -1,120 +1,147 @@
 #ifndef AST_HPP
 #define AST_HPP
-
 #include <iostream>
 #include <vector>
+#include <cstdint>
 #include "token.hpp"
 
 namespace AST {
 
-    enum node_t {
-        NODE_STMT,
-        NODE_EXPR,
-    };
-    struct Node {
-    private:
-        std::size_t m_pos;
-        node_t m_type;
-    public:
-        virtual std::string string() = 0;
-        std::size_t pos() { return m_pos; }
-        node_t node_type() { return m_type; }
-        explicit Node(std::size_t pos, node_t type) 
-        : m_pos(pos), m_type(type) {}
-    };
+    enum NodeType {
+        NODE_PROGRAM,
 
-    enum stmt_t {
         STMT_EXPR,
         STMT_IF,
         STMT_FOR,
         STMT_WHILE,
         STMT_LET,
+
+        EXPR_LIT_STRING,
+        EXPR_LIT_INT,
+        EXPR_LIT_FLOAT,
+        EXPR_LIT_IDENT,
+        EXPR_UNARY,
+        EXPR_BINARY,
+    };
+    struct Node {
+    private:
+        std::size_t location;
+    public:
+        explicit Node(std::size_t location)
+        : location(location) {}
+        std::size_t pos() { return location; };
+        virtual std::string string() = 0;
+        virtual NodeType type() = 0;
+        virtual ~Node() { };
     };
 
     struct Stmt : public Node {
-    private:
-        stmt_t m_type;
-    public:
-        stmt_t stmt_type() { return m_type; }
-        explicit Stmt(std::size_t pos, stmt_t type)
-        : Node(pos, NODE_STMT), m_type(type) {}
-    };
-
-    enum expr_t {
-        EXPR_LITERAL,
-        EXPR_BINARY,
-        EXPR_UNARY,
+        explicit Stmt(std::size_t location)
+        : Node(location) {};
+        virtual std::string string() = 0;
+        virtual NodeType type() = 0;
     };
 
     struct Expr : public Node {
-    private:
-        expr_t m_type;
-    public:
-        expr_t expr_type() { return m_type; }
-        explicit Expr(std::size_t pos, expr_t type)
-        : Node(pos, NODE_EXPR), m_type(type) {}
+        explicit Expr(std::size_t location)
+        : Node(location) {}
+        virtual std::string string() = 0;
+        virtual NodeType type() = 0;
     };
 
     struct Program : public Node {
-        std::vector<Stmt&> stmts;
+        std::vector<Stmt*> stmts;
+
+        Program() : Node(0) {}
+        ~Program() {
+            for (Stmt* stmt : stmts)
+                delete stmt;
+        }
+    
+        std::string string() override {
+            std::string s;
+            for (Stmt* stmt : stmts) s += stmt->string();
+            return s;
+        }
+        NodeType type() override { return NODE_PROGRAM; }
 
     };
 
-    enum literal_t {
-        LIT_FLOAT,
-        LIT_INT,
-        LIT_STRING,
-        LIT_IDENT,
-    };
 
-    struct ExprLiteral : public Expr {
-        literal_t type;
+    /* 
+     * Exprs
+     */
+    struct StringLit : public Expr {
         std::string value;
-        explicit ExprLiteral(std::size_t pos, std::string value) 
-        : Expr(pos, EXPR_LITERAL), value(value) {}
-        std::string string() { return value; }
-        literal_t literal_type() { return type; }
+
+        explicit StringLit(std::size_t pos) : Expr(pos) {}
+        explicit StringLit(std::string value, std::size_t pos)
+        : Expr(pos), value(value) {}
+        std::string string() override { return value; }
+        NodeType type() override { return EXPR_LIT_STRING; }
+    };
+
+    struct IntLit : public Expr {
+        int64_t value;
+
+        explicit IntLit(std::size_t pos) : Expr(pos) {}
+        explicit IntLit(int64_t value, std::size_t pos)
+        : Expr(pos), value(value) {}
+        std::string string() override { return std::to_string(value); }
+        NodeType type() override { return EXPR_LIT_INT; }
+    };
+
+    struct FloatLit : public Expr {
+        double value;
+
+        explicit FloatLit(std::size_t pos) : Expr(pos) {}
+        explicit FloatLit(double value, std::size_t pos)
+        : Expr(pos), value(value) {}
+        std::string string() override { return std::to_string(value); }
+        NodeType type() override { return EXPR_LIT_FLOAT; }
+    };
+
+    struct IdentLit : public Expr {
+        std::string value;
+
+        explicit IdentLit(std::size_t pos) : Expr(pos) {}
+        explicit IdentLit(std::string value, std::size_t pos)
+        : Expr(pos), value(value) {}
+        std::string string() override { return value; }
+        NodeType type() override { return EXPR_LIT_IDENT; }
     };
 
     struct ExprUnary : public Expr {
         Token op;
         Expr *right;
-        std::string string() {
-            std::string s = token_string[op];
-            s += ' ';
-            s += right->string();
-            return s;
-        }
-        explicit ExprUnary(std::size_t pos, Token op, Expr *right)
-        : Expr(pos, EXPR_UNARY), op(op), right(right) {}
+
+        explicit ExprUnary(std::size_t pos) : Expr(pos) {}
+        std::string string() override { return token_string[op] + ' ' + right->string(); }
+        NodeType type() override { return EXPR_UNARY; }
     };
 
     struct ExprBinary : public Expr {
         Expr *left;
         Token op;
         Expr *right;
-        std::string string() {
-            std::string s = left->string();
-            s += ' ';
-            s += token_string[op];
-            s += ' ';
-            s += right->string();
+
+        explicit ExprBinary(std::size_t pos) : Expr(pos) {}
+        std::string string() override { 
+            return left->string() + ' ' + token_string[op] + ' ' + right->string();
         }
-        explicit ExprBinary(std::size_t pos, Expr *left, Token op, Expr *right)
-        : Expr(pos, EXPR_BINARY), left(left), op(op), right(right) {}
+        NodeType type() override { return EXPR_BINARY; }
     };
 
-    // Statements
+    /*
+     * Statements
+     */
 
     struct StmtExpr : public Stmt {
-        Expr& expr;
-        std::string string() {
-            std::string s = expr.string();
-            s += '\n';
-        }
-        explicit StmtExpr(std::size_t pos, Expr& expr)
-        : Stmt(pos, STMT_EXPR), expr(expr) {}
+        Expr *expr;
+
+        explicit StmtExpr(std::size_t pos) : Stmt(pos) {} 
+        std::string string() override { return expr->string() + '\n'; }
+        NodeType type() override { return STMT_EXPR; }
     };
 }
-
 #endif
