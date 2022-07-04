@@ -18,11 +18,6 @@ bool is_identifier_part(char c) {
         (c == '_');
 }
 
-static inline
-bool is_digit(char c) {
-    return ('0' <= c && c <= '9');
-}
-
 
 static inline
 bool is_space(char c) {
