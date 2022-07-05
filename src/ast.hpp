@@ -131,7 +131,6 @@ namespace AST {
         }
         NodeType type() override { return EXPR_BINARY; }
     };
-
     /*
      * Statements
      */

@@ -9,7 +9,9 @@ struct LexTok {
     std::string literal;
 
     friend bool operator==(LexTok &l, Token tok) { return l.type == tok; }
+    friend bool operator!=(LexTok &l, Token tok) { return l.type != tok; }
     friend bool operator==(LexTok &l, std::string literal) { return l.literal == literal; }
+    friend bool operator!=(LexTok &l, std::string literal) { return l.literal != literal; }
 };
 
 class Lexer {

@@ -23,15 +23,19 @@ struct ParseError {
 class Parser {
     Lexer m_lexer;
     LexTok tok;
-    std::size_t pos;
+    std::size_t m_pos;
     std::vector<ParseError> errors;
 
     void next();
-    AST::ExprBinary* parse_binary_expr();
-    AST::ExprUnary* parse_unary_expr();
+    AST::IdentLit* parse_ident();
+    AST::IntLit* parse_int();
+    AST::FloatLit* parse_float();
+    AST::Expr* parse_binary_expr(int prec1);
+    AST::Expr* parse_unary_expr();
+    AST::Expr* parse_operand();
     AST::Expr* parse_expr();
     AST::Stmt* parse_stmt();
-    AST::StmtExpr* parse_expr_stmt();
+    AST::StmtExpr* parse_stmt_expr();
     std::vector<AST::Stmt*> parse_stmt_list();
     void (*error_handler) (std::size_t, const char* msg);
 
