@@ -59,6 +59,7 @@ enum class Token {
     TRUE,
     FALSE,
     FUN,
+    RETURN,
     FOR,
     WHILE,
     BREAK,

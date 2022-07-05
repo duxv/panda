@@ -45,6 +45,7 @@ std::map<Token, std::string> token_string {
    {Token::TRUE,"true"},
    {Token::FALSE,"false"},
    {Token::FUN,"fun"},
+   {Token::RETURN, "return"},
    {Token::FOR,"for"},
    {Token::WHILE,"while"},
    {Token::BREAK,"break"},

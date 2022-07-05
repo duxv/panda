@@ -31,6 +31,22 @@ int precedence(Token tok) {
     }
 }
 
+static
+bool is_stmt_start(Token tok) {
+    switch (tok) {
+        case Token::IF:
+        case Token::LET:
+        case Token::WHILE:
+        case Token::FOR:
+        case Token::RETURN:
+        case Token::BREAK:
+        case Token::CONTINUE:
+            return true;
+        default:
+            return false;
+    }
+}
+
 std::string ParseError::format() {
     std::string s = std::to_string(this->pos.row);
     s += ':';
@@ -153,11 +169,16 @@ FloatLit* Parser::parse_float() {
 }
 
 Expr* Parser::parse_operand() {
-
     switch (tok.type) {
         case Token::IDENT:    return parse_ident();
         case Token::INT:      return parse_int();
         case Token::FLOAT:    return parse_float();
+        default:
+            error(m_pos, "invalid expression");
+            Expr* bad = new ExprBad(m_pos);
+            while (!is_stmt_start(tok.type) && tok != Token::ENDMARKER)
+                next();
+            return bad;
     }
 }
 

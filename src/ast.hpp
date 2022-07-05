@@ -22,6 +22,7 @@ namespace AST {
         EXPR_LIT_IDENT,
         EXPR_UNARY,
         EXPR_BINARY,
+        EXPR_BAD,
     };
     struct Node {
     private:
@@ -130,6 +131,12 @@ namespace AST {
             return left->string() + ' ' + token_string[op] + ' ' + right->string();
         }
         NodeType type() override { return EXPR_BINARY; }
+    };
+
+    struct ExprBad : public Expr {
+        std::string string() override { return "<INVALID EXPRESSION>"; }
+        explicit ExprBad(std::size_t pos) : Expr(pos) {}
+        NodeType type() override { return EXPR_BAD; }
     };
     /*
      * Statements
