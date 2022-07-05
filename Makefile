@@ -15,7 +15,7 @@ $(TARGET): $(OBJ_FILES)
 	@echo $@
 	@$(CC) $(LDFLAGS) -o $@ $^
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp 
 	@echo $^
 	@$(CC) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 

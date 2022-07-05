@@ -4,18 +4,25 @@
 #include "lexer.hpp"
 #include "ast.hpp"
 
-inline constexpr int MAX_ERRORS = 1;
+// Parser cannot go behind this number of errors
+inline constexpr int MAX_ERRORS = 0;
+
+struct Bailout{}; // this is thrown when there are too many errors
+
+struct FilePos {
+    std::size_t row;
+    std::size_t col;
+};
 
 struct ParseError {
-    std::size_t pos;
+    FilePos pos;
     std::string msg;
 };
 
 class Parser {
     Lexer m_lexer;
-    Token tok;
+    LexTok tok;
     std::size_t pos;
-    std::string literal;
     std::vector<ParseError> errors;
 
     void next();
@@ -27,6 +34,7 @@ class Parser {
     std::vector<AST::Stmt*> parse_stmt_list();
     void (*error_handler) (std::size_t, const char* msg);
 
+    // Handling errors
     std::size_t expect(Token tok);
     void error_expected(std::size_t pos, std::string wanted);
     void error(std::size_t pos, std::string msg);

@@ -68,13 +68,13 @@ int main() {
     int i = 0;
     for (const auto& test: tests) {
         auto lex_tok = lex.nextToken();
-        if (lex_tok.first != test.tok) {
+        if (lex_tok.type != test.tok) {
             std::cout << "[ERROR] tokens don't match: " << "test number " << i << ": ";
-            std::cout << "want " << test.tok << " got '" << lex_tok.first << "'\n";
+            std::cout << "want " << test.tok << " got '" << lex_tok.type << "'\n";
             return 1;
-        } else if (lex_tok.second != test.literal) {
+        } else if (lex_tok.literal != test.literal) {
             std::cout << "[ERROR] literals don't match: " << "test number " << i << ": ";
-            std::cout << "want " << test.literal << " got '" << lex_tok.second << "'\n"; 
+            std::cout << "want " << test.literal << " got '" << lex_tok.literal << "'\n"; 
             return 1;
         }
         i++; 

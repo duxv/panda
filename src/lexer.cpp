@@ -134,10 +134,10 @@ std::string Lexer::read_ident() {
     return std::string(input.substr(offs, offset-offs));
 }
 
-std::pair<Token, std::string> Lexer::read_number() {
+LexTok Lexer::read_number() {
     int offs = offset;
-    std::pair<Token, std::string> ret;
-    ret.first = Token::INT; // Assuming it is an int
+    LexTok ret;
+    ret.type = Token::INT; // Assuming it is an int
     int base = 10; // assumed base is 10
     if (ch == '0') {
         char nch = tolower(peek());
@@ -161,14 +161,14 @@ std::pair<Token, std::string> Lexer::read_number() {
 
     // fractional part
     if (ch == '.' && (base == 10 || base == 16)) {
-        ret.first = Token::FLOAT;
+        ret.type = Token::FLOAT;
         read();
         read_digits(base);
     }
 
     // exponent
     if (ch == 'e' || ch == 'E' || ch == 'p' || ch == 'P') {
-        ret.first = Token::FLOAT;
+        ret.type = Token::FLOAT;
         read();
         if (ch == '-' || ch == '+') {
             read();
@@ -179,18 +179,18 @@ std::pair<Token, std::string> Lexer::read_number() {
             error_handler(offset, "exponent has no digits");
         }
     }
-    ret.second = input.substr(offs, offset-offs);
+    ret.literal = input.substr(offs, offset-offs);
     return ret;
 }
 
-std::pair<Token, std::string> Lexer::nextToken() {
+LexTok Lexer::nextToken() {
     skip_whitespace();
     char _ch = ch;
-    std::pair<Token, std::string> ret;
+    LexTok ret; 
 
     if (is_identifier_start(ch)) {
-        ret.second = read_ident(); 
-        ret.first = lookup_keyword(ret.second);
+        ret.literal = read_ident(); 
+        ret.type = lookup_keyword(ret.literal);
     } else if (isdigit(ch)) {
         ret = read_number();
     } else { 
@@ -206,23 +206,23 @@ read_operators:
 
     switch (_ch) {
         case 0:
-            ret.first = Token::ENDMARKER;
+            ret.type = Token::ENDMARKER;
             break;
         case '\n':
             while(ch == '\n') read(); // skip all the newlines
-            ret.first = Token::NEWLINE;
+            ret.type = Token::NEWLINE;
             break;
         case ',':
-            ret.first = Token::COMMA;
+            ret.type = Token::COMMA;
             break;
         case '+': 
-            ret.first = Token::ADD;
+            ret.type = Token::ADD;
             break;
         case '-': 
-            ret.first = Token::SUB;
+            ret.type = Token::SUB;
             break;
         case '*': 
-            ret.first = Token::MUL;
+            ret.type = Token::MUL;
             break;
         case '/':
         {
@@ -240,66 +240,66 @@ read_operators:
                     }
                 return nextToken();
             } else { // Token::DIV
-                ret.first = Token::DIV;
+                ret.type = Token::DIV;
                 break;
             }
         }
         case '%': 
-            ret.first = Token::REM;
+            ret.type = Token::REM;
             break;
         case ';':
-            ret.first = Token::NEWLINE; // We treat ';' as a newline.
+            ret.type = Token::NEWLINE; // We treat ';' as a newline.
             break;
         case ':':
-            ret.first = Token::COLON;
+            ret.type = Token::COLON;
             break;
         case '(':
-            ret.first = Token::LPAREN;
+            ret.type = Token::LPAREN;
             break;
         case ')':
-            ret.first = Token::RPAREN;
+            ret.type = Token::RPAREN;
             break;
         case '[':
-            ret.first = Token::LBRACKET;
+            ret.type = Token::LBRACKET;
             break;
         case ']':
-            ret.first = Token::RBRACKET;
+            ret.type = Token::RBRACKET;
             break;
         case '{':
-            ret.first = Token::LBRACE;
+            ret.type = Token::LBRACE;
             break;
         case '}':
-            ret.first = Token::RBRACE;
+            ret.type = Token::RBRACE;
             break;
         case '.':
-            ret.first = Token::DOT;
+            ret.type = Token::DOT;
             break;
         case '&':
             if (ch != '&') {
                 std::cout << ch << std::endl;
-                ret.first = Token::UNKNOWN;
-                ret.second = _ch;
+                ret.type = Token::UNKNOWN;
+                ret.literal = _ch;
             } else {
                 read();
-                ret.first = Token::AND;
+                ret.type = Token::AND;
             }
             break;
         case '|':
             if (ch != '|') {
-                ret.first = Token::UNKNOWN;
-                ret.second = _ch;
+                ret.type = Token::UNKNOWN;
+                ret.literal = _ch;
             } else {
                 read();
-                ret.first = Token::OR;
+                ret.type = Token::OR;
             }
             break;
         case '!':
         {
             if (ch == '=') {
                 read();
-                ret.first = Token::NOTEQ;
+                ret.type = Token::NOTEQ;
             } else
-                ret.first = Token::NOT;
+                ret.type = Token::NOT;
             
             break;
         }
@@ -307,38 +307,36 @@ read_operators:
         {
             if (ch == '=') {
                 read();
-                ret.first = Token::LESSEQ;
+                ret.type = Token::LESSEQ;
             } else
-                ret.first = Token::LESS;
+                ret.type = Token::LESS;
             break;
         }
         case '>':
         {
             if (ch == '=') {
                 read();
-                ret.first = Token::GREATEREQ;
+                ret.type = Token::GREATEREQ;
             } else
-                ret.first = Token::GREATER;
+                ret.type = Token::GREATER;
             break;
         }
         case '=':
         {
             if (ch == '=') {
                 read();
-                ret.first = Token::EQUAL;
+                ret.type = Token::EQUAL;
             } else
-                ret.first = Token::ASSIGN;
+                ret.type = Token::ASSIGN;
         }
         break;
         case '"':
-            ret.first = Token::STRING;
-            ret.second = read_string();
+            ret.type = Token::STRING;
+            ret.literal = read_string();
         break;
         default:
-            ret.first = Token::UNKNOWN;
-            ret.second.push_back(_ch);
+            ret.type = Token::UNKNOWN;
+            ret.literal.push_back(_ch);
     }
     return ret;
 }
-
-std::size_t Lexer::get_pos() { return offset; }
