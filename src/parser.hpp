@@ -17,6 +17,7 @@ struct FilePos {
 struct ParseError {
     FilePos pos;
     std::string msg;
+    std::string format();
 };
 
 class Parser {

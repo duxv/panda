@@ -3,6 +3,14 @@
 
 using namespace AST;
 
+std::string ParseError::format() {
+    std::string s = std::to_string(this->pos.row);
+    s += ':';
+    s += std::to_string(this->pos.col);
+    s += " ParserError: ";
+    s += msg;
+}
+
 static
 FilePos get_row_and_col(std::size_t offset, std::string_view s) {
     FilePos pos = {1, 1};
