@@ -149,5 +149,12 @@ namespace AST {
         std::string string() override { return expr->string() + '\n'; }
         NodeType type() override { return STMT_EXPR; }
     };
+
+    
+    struct FilePos {
+        std::size_t row;
+        std::size_t col;
+    };
+    FilePos FilePos_from_offset(std::size_t offs, std::string_view input);
 }
 #endif

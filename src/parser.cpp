@@ -47,29 +47,7 @@ bool is_stmt_start(Token tok) {
     }
 }
 
-std::string ParseError::format() {
-    std::string s = std::to_string(this->pos.row);
-    s += ':';
-    s += std::to_string(this->pos.col);
-    s += " ParserError: ";
-    s += msg;
-    return s;
-}
 
-static
-FilePos get_row_and_col(std::size_t offset, std::string_view s) {
-    FilePos pos = {1, 1};
-
-    for (int i = 0; i <= offset; i++) {
-        if (s[i] == '\n') {
-            pos.col = 1;
-            pos.row += 1;
-        } else {
-            pos.col += 1;
-        }
-    }
-    return pos;
-}
 
 void Parser::next() {
     m_pos = m_lexer.get_pos();
@@ -77,11 +55,8 @@ void Parser::next() {
 }
 
 void Parser::error(std::size_t pos, std::string msg) {
-    FilePos file_pos = get_row_and_col(pos, m_lexer.get_input());
-
-    errors.push_back({file_pos, msg});
-    if (errors.size() > MAX_ERRORS)
-        throw Bailout{};
+    FilePos fpos = FilePos_from_offset(pos, m_lexer.get_input());
+    error_handler(fpos, msg);
 }
 
 void Parser::error_expected(std::size_t pos, std::string msg) {
@@ -96,6 +71,17 @@ std::size_t Parser::expect(Token e) {
     }
     next();
     return pos;
+}
+
+Program* Parser::parse_program() {
+    try {
+        Program* prog = new Program();
+        prog->stmts = parse_stmt_list();
+        return prog;
+    } catch (...) {
+        std::cout << "ERROR!!! Shouldn't have arrive here!!\n";
+        exit(1);
+    }
 }
 
 std::vector<Stmt*> Parser::parse_stmt_list() {

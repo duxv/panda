@@ -2,14 +2,15 @@
 #include "../src/lexer.hpp"
 
 int main() {
-    std::string input = "let x = 11\n\n"
+    std::string input = "let x = 11\n"
+                        "\n"
                         "let y: i32 = 1.29\n"
                         "if x == y && x + y < 200 || 1 == 1 {\n"
                         "println(\"hello world\")\n"
                         "for x in arr {println(\"Found x right here {}\", x)}\n";
                         "/*Multiline string\n\n*/";
-    Lexer lex(input, [](std::size_t pos, const char* msg) {
-        printf("POS: %ld: Error %s\n", pos, msg);
+    Lexer lex(input, [](AST::FilePos pos, std::string msg) {
+        printf("%lld:%lld %s\n", pos.row, pos.col, msg.c_str());
         std::exit(0);
     });
     struct Test {

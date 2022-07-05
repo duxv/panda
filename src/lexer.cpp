@@ -3,6 +3,7 @@
 #include <memory>
 #include <map>
 
+
 static inline
 bool is_identifier_start(char c) {
     return ('a' <= c && c <= 'z') ||
@@ -51,6 +52,10 @@ Token lookup_keyword(const std::string& ident) {
     if (ident == "in")          return Token::IN;
 
     return Token::IDENT;
+}
+
+void Lexer::error(std::size_t offs, std::string msg) {
+    error_handler(AST::FilePos_from_offset(offs, input), "Lexer Error: " + msg);
 }
 
 void Lexer::read() {    
@@ -114,7 +119,7 @@ std::string Lexer::read_string() {
     for (;;) {
         char _ch = ch;
         if (ch == '\n' || ch == 0) {
-                error_handler(offset, "string literal not terminated");
+                error(offset, "string literal not terminated");
                 break;
         }
         read();
@@ -176,7 +181,7 @@ LexTok Lexer::read_number() {
         int offs = offset;
         read_digits(10);
         if (offs == offset) {
-            error_handler(offset, "exponent has no digits");
+            error(offset, "exponent has no digits");
         }
     }
     ret.literal = input.substr(offs, offset-offs);
@@ -336,7 +341,7 @@ read_operators:
         break;
         default:
             ret.type = Token::UNKNOWN;
-            ret.literal.push_back(_ch);
+            ret.literal = _ch;
     }
     return ret;
 }

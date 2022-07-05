@@ -1,3 +1,5 @@
-#include "../src/ast.hpp"
+#include "../src/parser.hpp"
 
-int main() {}
+int main() {
+    Parser* parser();
+}
