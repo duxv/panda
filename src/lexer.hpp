@@ -12,7 +12,7 @@ struct LexTok {
 };
 
 class Lexer {
-    std::string input;
+    std::string_view input;
     char ch = 0;
     std::size_t offset = 0;
     int row = 1, col = 1; // pos in the input
