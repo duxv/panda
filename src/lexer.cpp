@@ -231,23 +231,13 @@ read_operators:
             break;
         case '/':
         {
-            if (ch == '/' || ch == '*') {
-                if (ch == '/')
-                    while(ch != '\n' && ch != 0)
-                        read();
-                else if (ch == '*')
-                    while (ch != 0) {
-                        read();
-                        if (ch == '*' && peek() == '/') {
-                            read();
-                            read();
-                        }
-                    }
+            if (ch == '/') {
+                while (ch != '\n') read();
                 return nextToken();
-            } else { // Token::DIV
-                ret.type = Token::DIV;
-                break;
             }
+            else
+                ret.type = Token::DIV;
+            break;
         }
         case '%': 
             ret.type = Token::REM;

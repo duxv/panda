@@ -27,6 +27,7 @@ class Lexer {
     // Peek the next char, after the curent one and return it. Without advancing.
     char peek();
     void skip_whitespace();
+    void skip_comment();
     void read_digits(int base);
     std::string read_string();
     std::string read_ident();
