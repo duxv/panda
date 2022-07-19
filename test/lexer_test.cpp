@@ -6,9 +6,10 @@ int main() {
                         "\n"
                         "let y: i32 = 1.29\n"
                         "if x == y && x + y < 200 || 1 == 1 {\n"
-                        "println(\"hello world\")\n"
+                        "println(\"hello world\") // some inline comment\n"
                         "for x in arr {println(\"Found x right here {}\", x)}\n";
-                        "/*Multiline string\n\n*/";
+                        "/*Multiline string\n\n*/\n"
+                        "< > <= >= != ==";
     Lexer lex(input, [](AST::FilePos pos, std::string msg) {
         printf("%lld:%lld %s\n", pos.row, pos.col, msg.c_str());
         std::exit(0);
@@ -64,9 +65,14 @@ int main() {
         {Token::RPAREN, ""},
         {Token::RBRACE, ""},
         {Token::NEWLINE, ""},
-        {Token::ENDMARKER, ""},
     };
     int i = 0;
+  //  LexTok lt; 
+  //  while ((lt = lex.nextToken()).type != Token::ENDMARKER) {
+  //      std::cout << token_string[lt.type] << ' ';
+  //      std::cout << "'" << lt.literal << "'" << std::endl;
+  //  }
+
     for (const auto& test: tests) {
         auto lex_tok = lex.nextToken();
         if (lex_tok.type != test.tok) {
