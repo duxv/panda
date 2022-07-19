@@ -7,14 +7,13 @@ int main() {
                         "let y: i32 = 1.29\n"
                         "if x == y && x + y < 200 || 1 == 1 {\n"
                         "println(\"hello world\") // some inline comment\n"
-                        "for x in arr {println(\"Found x right here {}\", x)}\n";
-                        "/*Multiline string\n\n*/\n"
-                        "< > <= >= != ==";
+                        "for x in arr {println(\"Found x right here {}\", x)}\n"
+                        "< > <= >= != ==\n";
     Lexer lex(input, [](AST::FilePos pos, std::string msg) {
         printf("%lld:%lld %s\n", pos.row, pos.col, msg.c_str());
         std::exit(0);
     });
-    struct Test {
+    struct Test { 
         Token tok;
         std::string literal;
     };
@@ -65,6 +64,14 @@ int main() {
         {Token::RPAREN, ""},
         {Token::RBRACE, ""},
         {Token::NEWLINE, ""},
+        {Token::LESS, ""},
+        {Token::GREATER, ""},
+        {Token::LESSEQ, ""},
+        {Token::GREATEREQ, ""},
+        {Token::NOTEQ, ""},
+        {Token::EQUAL, ""},
+        {Token::NEWLINE, ""},
+        {Token::ENDMARKER, ""},
     };
     int i = 0;
   //  LexTok lt; 
